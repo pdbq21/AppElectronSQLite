@@ -1,0 +1,22 @@
+{
+  "name": "app-electron-sqllite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "build": "electron-packager . --win32 --x64",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pdbq21",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.7.9",
+    "electron-packager": "^10.1.0",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.6.0"
+  }
+}
