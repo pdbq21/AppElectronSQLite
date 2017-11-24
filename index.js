@@ -22,6 +22,9 @@ function createWindow () {
         slashes: true
     }))
 
+    // SQLite stuff
+    let server = require('./server/server')
+
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 
