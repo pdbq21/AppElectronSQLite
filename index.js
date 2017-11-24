@@ -1,15 +1,17 @@
-const electron = require('electron')
+const electron = require('electron');
 // Module to control application life.
-const app = electron.app
+const app = electron.app;
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
+const BrowserWindow = electron.BrowserWindow;
 
-const path = require('path')
-const url = require('url')
+const path = require('path');
+const url = require('url');
+const fs = require('fs');
 
+const filepath = 'E:\\New folder\\KURSOVA\\SCADA.txt';
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 function createWindow () {
     // Create the browser window.
@@ -22,8 +24,17 @@ function createWindow () {
         slashes: true
     }))
 
-    // SQLite stuff
-    let server = require('./server/server')
+    fs.readFile(filepath, 'utf-8', (err, data) => {
+        if(err){
+            console.log("An error ocurred reading the file :" + err.message);
+            return;
+        }
+
+        // Change how to handle the file content
+        console.log("The file content is : " + data);
+    });
+    // SQLite stuff it is work
+   // let server = require('./server/server')
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
