@@ -7,8 +7,10 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
-
-const filepath = 'E:\\New folder\\KURSOVA\\SCADA.txt';
+// executing a program
+const child = require('child_process').execFile;
+const filepath = './SCADA/SCADA.txt';
+const processpath = './SCADA/Spirt.exe';
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -23,6 +25,15 @@ function createWindow () {
         protocol: 'file:',
         slashes: true
     }))
+
+    child(processpath, function(err, data) {
+        if(err){
+            console.error(err);
+            return;
+        }
+
+        console.log(data.toString());
+    });
 
     fs.readFile(filepath, 'utf-8', (err, data) => {
         if(err){
