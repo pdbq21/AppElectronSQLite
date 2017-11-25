@@ -14,3 +14,5 @@ Todo:
 5.1 Button Start:
 + 5.1.0 open the SCADA program (SCADA/Split.exe)
 5.1.1 run the SCADA process (SCADA/Split.exe), need turn on switch into this program
+5.2 Button Stop:
+5.2.0 stops reading from the file (SCADA.txt)

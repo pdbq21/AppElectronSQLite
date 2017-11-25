@@ -7,17 +7,14 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
-// executing a program
-const child = require('child_process').execFile;
-const filepath = './SCADA/SCADA.txt';
-const processpath = './SCADA/Spirt.exe';
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 function createWindow () {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600})
+    mainWindow = new BrowserWindow({width: 800, height: 600});
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
@@ -26,16 +23,7 @@ function createWindow () {
         slashes: true
     }))
 
-    child(processpath, function(err, data) {
-        if(err){
-            console.error(err);
-            return;
-        }
-
-        console.log(data.toString());
-    });
-
-    fs.readFile(filepath, 'utf-8', (err, data) => {
+    /*fs.readFile(filepath, 'utf-8', (err, data) => {
         if(err){
             console.log("An error ocurred reading the file :" + err.message);
             return;
@@ -43,12 +31,12 @@ function createWindow () {
 
         // Change how to handle the file content
         console.log("The file content is : " + data);
-    });
+    });*/
     // SQLite stuff it is work
    // let server = require('./server/server')
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
