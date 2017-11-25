@@ -18,3 +18,10 @@ Todo:
 -  5.1.1 run the SCADA process (SCADA/Split.exe), need turn on switch into this program
 -  5.2 Button Stop:
 -  5.2.0 stops reading from the file (SCADA.txt)
+
+#Parameters:
+Column 1 - TR-106, TR-111, PPC-305
+Column 2 - TR-107, TR-112, PPC-307
+Tubes - TPC-101, TPC-102
+Control of the value for the triggering system message:
+PPC-305 > 7m, PPC-307>5m

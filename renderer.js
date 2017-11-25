@@ -13,6 +13,16 @@ let controlStop = document.createElement('button');
 controlStop.innerHTML = 'Stop';
 controlStop.setAttribute('id', 'control_stop');
 
+// parameter => index of array
+const TR_106 = 0;
+const TR_111 = 1;
+const TR_107 = 3;
+const TR_112 = 4;
+const PPC_305 = 6;
+const PPC_307 = 7;
+const TPC_101 = 9;
+const TPC_102 = 10;
+
 // start button launchers the SCADA program
 controlStart.onclick = function () {
     console.log('start');
@@ -126,11 +136,17 @@ setInterval(function () {
         const lastLine = lines.slice(-1)[0];
         if (savedLastLine === lastLine) return;
         savedLastLine = lastLine;
-        //const fields = lastLine.split(',');
 
-        console.log(lastLine);
+        const fields = lastLine.trim().split(/\s+/g);
+
+        console.log(fields);
     });
 }, 1000);
 //setTimeout(readLastLine(), 1000);
 
+
+
+// todo: below
+//PPC_305>7
+//PPC_307>5
 
