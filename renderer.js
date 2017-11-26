@@ -1,13 +1,15 @@
 const {runDB, insertRows, readEachRows} = require('./server/server');
 
+
 const fs = require('fs');
-const {execFile, spawn} = require('child_process');
+const {execFile} = require('child_process');
 // path
 const filepath = './SCADA/SCADA.txt';
 const processpath = './SCADA/Spirt.exe';
 // elements
 const controlContainer = document.getElementById('control_container');
 const controlStart = document.getElementById('control_start');
+const controlExit = document.getElementById('control_exit');
 
 let controlStop = document.createElement('button');
 controlStop.innerHTML = 'Stop';
@@ -16,26 +18,16 @@ controlStop.setAttribute('id', 'control_stop');
 //PPC_305>7; [6] > 7
 //PPC_307>5; [7] > 5
 // parameter => index of array
-const TR_106 = 0;
+/*const TR_106 = 0;
 const TR_111 = 1;
 const TR_107 = 3;
 const TR_112 = 4;
 const PPC_305 = 6;
 const PPC_307 = 7;
 const TPC_101 = 9;
-const TPC_102 = 10;
+const TPC_102 = 10;*/
 // not used indexs = 2, 5, 8, 11
-// all parameters
-const parameters = [
-    'TR_106',
-    'TR_111',
-    'TR_107',
-    'TR_112',
-    'PPC_305',
-    'PPC_307',
-    'TPC_101',
-    'TPC_102'
-];
+
 // start button launchers the SCADA program
 controlStart.onclick = function () {
     console.log('start');
@@ -44,8 +36,6 @@ controlStart.onclick = function () {
 
     // run DB => create Table,
     runDB();
-    // readLastLine();
-
     // save last line
     let savedLastLine = '';
     setInterval(function () {
@@ -65,7 +55,6 @@ controlStart.onclick = function () {
             let parameters = lastLine.trim().split(/\s+/g);
 
             const paramsByOption = parameters.filter((item, index) => [2, 5, 8, 11].indexOf(index) === -1);
-            console.log(paramsByOption, parameters);
 
             const date = new Date();
             // Date yyyy-mm-dd
@@ -82,9 +71,9 @@ controlStart.onclick = function () {
             // insert rows (Date, Time, ...parameters)
             insertRows(dateStr, timeStr, ...paramsByOption, warning);
         });
-    readEachRows(renderTable);
+        readEachRows(renderTable);
 
-    }, 1000);
+    }, 800);
 };
 // stop buttons (close the SCADA)
 controlStop.onclick = function () {
@@ -92,7 +81,10 @@ controlStop.onclick = function () {
     //closeSCADAProgram();
     controlStop.parentNode.replaceChild(controlStart, controlStop);
 };
-
+// close app
+controlExit.onclick = function () {
+    window.close();
+};
 // below function it is work
 function runSCADAProgram() {
     execFile(processpath, function (err, data) {
@@ -202,9 +194,9 @@ function readLastLine() {
 let elementTableHead = document.querySelector('#table-props>thead>tr');
 let elementTableBody = document.querySelector('#table-props>tbody');
 
-function renderTable(data){
+function renderTable(data) {
     // render thead
-    if (elementTableHead.innerHTML === ''){
+    if (elementTableHead.innerHTML === '') {
         Object.keys(data).forEach((item) => {
             const th = document.createElement("th");
             th.innerHTML = item;

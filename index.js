@@ -60,7 +60,6 @@ app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         console.log('close');
         clearFile();
-        // todo: kill child process (SCADA program)
         app.quit();
     }
 });
@@ -77,7 +76,6 @@ app.on('activate', function () {
 function clearFile() {
     fs.writeFile(filepath, '', function (err) {
         if (err) throw err;
-        console.log('It\'s saved!');
+        console.log('It\'s clear!');
     });
 }
-

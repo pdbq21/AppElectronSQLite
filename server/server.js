@@ -87,10 +87,9 @@ exports.readEachRows = function (callback) {
     });
 };
 
-function closeDb() {
-    console.log("closeDb");
+exports.closeDb = function () {
     db.close();
-}
+};
 
 exports.runDB =  function () {
     createDb();
