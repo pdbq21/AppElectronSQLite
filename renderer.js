@@ -1,4 +1,4 @@
-//let server = require('./server/server');
+let server = require('./server/server');
 
 const fs = require('fs');
 const {execFile, spawn} = require('child_process');
@@ -29,8 +29,29 @@ controlStart.onclick = function () {
     runSCADAProgram();
     controlStart.parentNode.replaceChild(controlStop, controlStart);
 
-   // readLastLine()
-    //readLastLine();
+   // readLastLine();
+
+    // save last line
+    let savedLastLine = '';
+    setInterval(function () {
+        console.log('read');
+        fs.readFile(filepath, 'utf-8', (err, data) => {
+            if (err) {
+                console.log("An error ocurred reading the file :" + err.message);
+                return;
+            }
+            if (data.trim() === '') return;
+
+            const lines = data.trim().split('\n');
+            const lastLine = lines.slice(-1)[0];
+            if (savedLastLine === lastLine) return;
+            savedLastLine = lastLine;
+
+            const fields = lastLine.trim().split(/\s+/g);
+
+            console.log(fields);
+        });
+    }, 1000);
 };
 // stop buttons (close the SCADA)
 controlStop.onclick = function () {
@@ -120,10 +141,9 @@ function readLastLine() {
 
 }
 
-// save last line
-let savedLastLine = '';
+
 // Reading the file every second; Todo: need fix this logic
-setInterval(function () {
+/*setInterval(function () {
     console.log('read');
     fs.readFile(filepath, 'utf-8', (err, data) => {
         if (err) {
@@ -141,7 +161,7 @@ setInterval(function () {
 
         console.log(fields);
     });
-}, 1000);
+}, 1000);*/
 //setTimeout(readLastLine(), 1000);
 
 
