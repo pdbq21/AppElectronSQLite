@@ -77,16 +77,15 @@ exports.insertRows = function (...arg) {
     //statement.finalize(readAllRows);
 };
 
-function readAllRows() {
-    console.log("readAllRows SCADA");
-    db.all("SELECT rowid AS id, test FROM SCADA", function (err, rows) {
-        console.log(rows);
-        rows.forEach(function (row) {
-            console.log(row.id + ": " + row.test);
-        });
-        closeDb();
+exports.readEachRows = function (callback) {
+    console.log("readEachRows SCADA");
+    db.each("SELECT * FROM SCADA", function (err, row) {
+        if(err !== null){
+            console.log(err);
+        }
+        callback(row)
     });
-}
+};
 
 function closeDb() {
     console.log("closeDb");

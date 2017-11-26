@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./styles.css"/>
     <title>Coursework</title>
-  </head>
-  <body>
-    <h1>Show data from SCADA</h1>
-    <main>
-      <p>Table view</p>
-      <p id="test"></p>
-      <div id="controls_container">
-        <button id="control_start">Start</button>
-      </div>
+</head>
+<body>
+<h1>Show data from SCADA</h1>
+<main>
+    <p>Table view</p>
+    <div class="table_container">
+        <table id="table-props">
+            <thead>
+            <tr></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-    </main>
-    <footer>
-      Using Node.js <script>document.write(process.versions.node)</script>,
-      Chromium <script>document.write(process.versions.chrome)</script>,
-      and Electron <script>document.write(process.versions.electron)</script>.
-    </footer>
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
-    </script>
-  </body>
+
+    <p id="test"></p>
+    <div id="controls_container">
+        <button id="control_start">Start</button>
+    </div>
+
+</main>
+<footer>
+    Using Node.js
+    <script>document.write(process.versions.node)</script>
+    ,
+    Chromium
+    <script>document.write(process.versions.chrome)</script>
+    ,
+    and Electron
+    <script>document.write(process.versions.electron)</script>
+    .
+</footer>
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+</body>
 </html>

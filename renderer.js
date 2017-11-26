@@ -1,4 +1,4 @@
-const {runDB, insertRows} = require('./server/server');
+const {runDB, insertRows, readEachRows} = require('./server/server');
 
 const fs = require('fs');
 const {execFile, spawn} = require('child_process');
@@ -82,6 +82,8 @@ controlStart.onclick = function () {
             // insert rows (Date, Time, ...parameters)
             insertRows(dateStr, timeStr, ...paramsByOption, warning);
         });
+    readEachRows(renderTable);
+
     }, 1000);
 };
 // stop buttons (close the SCADA)
@@ -197,6 +199,25 @@ function readLastLine() {
 //setTimeout(readLastLine(), 1000);
 
 
+let elementTableHead = document.querySelector('#table-props>thead>tr');
+let elementTableBody = document.querySelector('#table-props>tbody');
 
+function renderTable(data){
+    // render thead
+    if (elementTableHead.innerHTML === ''){
+        Object.keys(data).forEach((item) => {
+            const th = document.createElement("th");
+            th.innerHTML = item;
+            elementTableHead.appendChild(th)
+        });
+    }
 
-
+    const tr = document.createElement("tr");
+    // render tbody
+    Object.keys(data).forEach((item) => {
+        const td = document.createElement("td");
+        td.innerHTML = data[item];
+        tr.appendChild(td);
+    });
+    elementTableBody.insertBefore(tr, elementTableBody.firstChild);
+}
