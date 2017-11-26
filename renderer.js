@@ -24,17 +24,15 @@ const PPC_307 = 7;
 const TPC_101 = 9;
 const TPC_102 = 10;*/
 // not used indexs = 2, 5, 8, 11
-let isStoped = true;
 let ifFirstStart = true;
+let timerId = 0;
 // start button launchers the SCADA program
 controlStart.onclick = function () {
     console.log('start');
-    isStoped = false;
     if (ifFirstStart) {
         runSCADAProgram();
         ifFirstStart = false;
     }
-
 
     controlStart.parentNode.replaceChild(controlStop, controlStart);
 
@@ -42,11 +40,9 @@ controlStart.onclick = function () {
     runDB();
     // save last line
     let savedLastLine = '';
-    const timerId = setInterval(function () {
+    timerId = setInterval(function () {
         console.log('read');
-        if (isStoped) {
-            clearInterval(timerId);
-        }
+
         fs.readFile(filepath, 'utf-8', (err, data) => {
             if (err) {
                 console.log("An error ocurred reading the file :" + err.message);
@@ -85,7 +81,7 @@ controlStart.onclick = function () {
 // stop buttons (close the SCADA)
 controlStop.onclick = function () {
     console.log('stop');
-    isStoped = true;
+    clearInterval(timerId);
     controlStop.parentNode.replaceChild(controlStart, controlStop);
 
 };
@@ -202,7 +198,7 @@ function readLastLine() {
 
 let elementTableHead = document.querySelector('#table-props>thead>tr');
 let elementTableBody = document.querySelector('#table-props>tbody');
-
+let test = 0
 function renderTable(data) {
     // render thead
     if (elementTableHead.innerHTML === '') {
@@ -215,6 +211,7 @@ function renderTable(data) {
 
     const tr = document.createElement("tr");
     // render tbody
+    console.log(++test)
     Object.keys(data).forEach((item) => {
         const td = document.createElement("td");
         td.innerHTML = data[item];
