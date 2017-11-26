@@ -12,7 +12,9 @@ const controlStart = document.getElementById('control_start');
 let controlStop = document.createElement('button');
 controlStop.innerHTML = 'Stop';
 controlStop.setAttribute('id', 'control_stop');
-
+// todo: below
+//PPC_305>7; [6] > 7
+//PPC_307>5; [7] > 5
 // parameter => index of array
 const TR_106 = 0;
 const TR_111 = 1;
@@ -22,6 +24,7 @@ const PPC_305 = 6;
 const PPC_307 = 7;
 const TPC_101 = 9;
 const TPC_102 = 10;
+// not used indexs = 2, 5, 8, 11
 // all parameters
 const parameters = [
     'TR_106',
@@ -41,7 +44,7 @@ controlStart.onclick = function () {
 
     // run DB => create Table,
     runDB();
-   // readLastLine();
+    // readLastLine();
 
     // save last line
     let savedLastLine = '';
@@ -59,17 +62,18 @@ controlStart.onclick = function () {
             if (savedLastLine === lastLine) return;
             savedLastLine = lastLine;
 // => ['', '', ...]
-            const parameters = lastLine.trim().split(/\s+/g);
+            let parameters = lastLine.trim().split(/\s+/g);
 
-            //console.log(parameters);
+            const paramsByOption = parameters.filter((item, index) => [2, 5, 8, 11].indexOf(index) === -1);
+            console.log(paramsByOption, parameters);
 
             const date = new Date();
             // Date yyyy-mm-dd
             const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
             // Time hh:mm:ss
             const timeStr = date.toLocaleTimeString();
-            // insert rows (Date, Time)
-            insertRows(dateStr, timeStr);
+            // insert rows (Date, Time, ...parameters)
+            insertRows(dateStr, timeStr, ...paramsByOption);
         });
     }, 1000);
 };
@@ -154,11 +158,11 @@ function readLastLine() {
 
     });*/
 
-   /* stream.on('end', function () {
-        console.log('end');
-    });*/
+    /* stream.on('end', function () {
+         console.log('end');
+     });*/
 
-       console.log('read')
+    console.log('read')
 
 }
 
@@ -187,7 +191,5 @@ function readLastLine() {
 
 
 
-// todo: below
-//PPC_305>7
-//PPC_307>5
+
 
