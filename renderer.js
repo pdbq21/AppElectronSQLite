@@ -72,8 +72,15 @@ controlStart.onclick = function () {
             const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
             // Time hh:mm:ss
             const timeStr = date.toLocaleTimeString();
+
+            //PPC_305>7; [6] > 7
+            //PPC_307>5; [7] > 5
+            let warning = (parameters[6] > 7 && parameters[7] > 5) ?
+                'Warning: the values of PPC_305 and PPC_307 exceed the permissible values' :
+                (parameters[6] > 7) ? 'Warning: The value of PPC_305 is more than 7' :
+                    (parameters[7] > 5) ? 'Warning: The value of PPC_307 is more than 5' : 'OK';
             // insert rows (Date, Time, ...parameters)
-            insertRows(dateStr, timeStr, ...paramsByOption);
+            insertRows(dateStr, timeStr, ...paramsByOption, warning);
         });
     }, 1000);
 };
