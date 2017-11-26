@@ -1,4 +1,4 @@
-let server = require('./server/server');
+const {runDB, insertRows} = require('./server/server');
 
 const fs = require('fs');
 const {execFile, spawn} = require('child_process');
@@ -22,13 +22,25 @@ const PPC_305 = 6;
 const PPC_307 = 7;
 const TPC_101 = 9;
 const TPC_102 = 10;
-
+// all parameters
+const parameters = [
+    'TR_106',
+    'TR_111',
+    'TR_107',
+    'TR_112',
+    'PPC_305',
+    'PPC_307',
+    'TPC_101',
+    'TPC_102'
+];
 // start button launchers the SCADA program
 controlStart.onclick = function () {
     console.log('start');
     runSCADAProgram();
     controlStart.parentNode.replaceChild(controlStop, controlStart);
 
+    // run DB => create Table,
+    runDB();
    // readLastLine();
 
     // save last line
@@ -46,10 +58,18 @@ controlStart.onclick = function () {
             const lastLine = lines.slice(-1)[0];
             if (savedLastLine === lastLine) return;
             savedLastLine = lastLine;
+// => ['', '', ...]
+            const parameters = lastLine.trim().split(/\s+/g);
 
-            const fields = lastLine.trim().split(/\s+/g);
+            //console.log(parameters);
 
-            console.log(fields);
+            const date = new Date();
+            // Date yyyy-mm-dd
+            const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+            // Time hh:mm:ss
+            const timeStr = date.toLocaleTimeString();
+            // insert rows (Date, Time)
+            insertRows(dateStr, timeStr);
         });
     }, 1000);
 };
@@ -71,6 +91,7 @@ function runSCADAProgram() {
         console.log(data.toString());
     });
 }
+
 
 /*
 // not working
