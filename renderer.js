@@ -2,7 +2,7 @@ const {runDB, insertRows, readEachRows} = require('./server/server');
 
 
 const fs = require('fs');
-const {execFile} = require('child_process');
+const {execFile, spawn} = require('child_process');
 // path
 const filepath = './SCADA/SCADA.txt';
 const processpath = './SCADA/Spirt.exe';
@@ -76,15 +76,17 @@ controlStart.onclick = function () {
         });
         readEachRows(renderTable);
 
-    }, 800);
+    }, 1000);
 };
 // stop buttons (close the SCADA)
 controlStop.onclick = function () {
     console.log('stop');
+    stopReading()
+};
+function stopReading() {
     clearInterval(timerId);
     controlStop.parentNode.replaceChild(controlStart, controlStop);
-
-};
+}
 // close app
 controlExit.onclick = function () {
     window.close();
@@ -92,114 +94,22 @@ controlExit.onclick = function () {
 
 // below function it is work
 function runSCADAProgram() {
-    execFile(processpath, function (err, data) {
-        if (err) {
-            console.error(err);
-            return;
-        }
+    console.log('run');
 
-        console.log(data.toString());
+    const spirt = spawn(processpath);
+
+    spirt.on('exit', () => {
+        stopReading();
+        ifFirstStart=true;
     });
 }
-
-
-/*
-// not working
-function closeSCADAProgram() {
-    const child = spawn(processpath, function (err, data) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-
-        console.log(data.toString());
-    });
-    child.kill();
-}
-*/
-
-//const stream = fs.ReadStream(filepath);
-
-function readLastLine() {
-    /*fs.readFile(filepath, 'utf-8', (err, data) => {
-         if (err) {
-             console.log("An error ocurred reading the file :" + err.message);
-             return;
-         }
-         if (data.trim() === '') return;
-
-         const lines = data.trim().split('\n');
-         const lastLine = lines.slice(-1)[0];
-
-         //const fields = lastLine.split(',');
-         //const audioFile = fields.slice(-1)[0].replace('file:\\\\', '');
-
-         console.log(lastLine);
-     });*/
-
-    /*
-    stream.on('readable', function(){
-        const data = stream.read();
-        //if (data.trim() === '') return;
-        //const lines = data.trim().split('\n');
-        //const lastLine = lines.slice(-1)[0];
-
-        //const fields = lastLine.split(',');
-        //const audioFile = fields.slice(-1)[0].replace('file:\\\\', '');
-
-        console.log(data);
-    });*/
-
-    /*stream.on('end', function(){
-        console.log("THE END");
-    });*/
-
-
-    /*const stream = fs.createReadStream(filepath, {encoding: 'utf8'});
-    stream.on('readable', function () {
-        const data = this.read();
-        //const lines = data.trim().split('\n');
-        //const lastLine = lines.slice(-1)[0];
-        console.log(data)
-
-    });*/
-
-    /* stream.on('end', function () {
-         console.log('end');
-     });*/
-
-    console.log('read')
-
-}
-
-
-// Reading the file every second; Todo: need fix this logic
-/*setInterval(function () {
-    console.log('read');
-    fs.readFile(filepath, 'utf-8', (err, data) => {
-        if (err) {
-            console.log("An error ocurred reading the file :" + err.message);
-            return;
-        }
-        if (data.trim() === '') return;
-
-        const lines = data.trim().split('\n');
-        const lastLine = lines.slice(-1)[0];
-        if (savedLastLine === lastLine) return;
-        savedLastLine = lastLine;
-
-        const fields = lastLine.trim().split(/\s+/g);
-
-        console.log(fields);
-    });
-}, 1000);*/
-//setTimeout(readLastLine(), 1000);
 
 
 let elementTableHead = document.querySelector('#table-props>thead>tr');
 let elementTableBody = document.querySelector('#table-props>tbody');
-let test = 0
+
 function renderTable(data) {
+    console.log('callback');
     // render thead
     if (elementTableHead.innerHTML === '') {
         Object.keys(data).forEach((item) => {
@@ -211,7 +121,7 @@ function renderTable(data) {
 
     const tr = document.createElement("tr");
     // render tbody
-    console.log(++test)
+
     Object.keys(data).forEach((item) => {
         const td = document.createElement("td");
         td.innerHTML = data[item];

@@ -74,7 +74,7 @@ app.on('activate', function () {
 
 // clear SCADA.txt
 function clearFile() {
-    fs.writeFile(filepath, '', function (err) {
+    fs.writeFileSync(filepath, '', function (err) {
         if (err) throw err;
         console.log('It\'s clear!');
     });

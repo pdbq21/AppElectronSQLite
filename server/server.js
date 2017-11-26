@@ -85,6 +85,7 @@ exports.readEachRows = function (callback) {
         }
         callback(row)
     });
+    //db.close();
 };
 
 exports.closeDb = function () {
@@ -94,18 +95,3 @@ exports.closeDb = function () {
 exports.runDB =  function () {
     createDb();
 };
-
-
-// Todo: fields for the table:
-// - date
-// - time
-// - parameters of SCADA:
-// TR_106
-/*TR_111
-TR_107
-TR_112
-PPC_305
-PPC_307
-TPC_101
-TPC_102*/
-// - warning message
