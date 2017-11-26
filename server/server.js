@@ -50,13 +50,19 @@ function createTable() {
 function insertRows() {
     console.log("insertRows SCADA");
     // todo: insert into SCADA for all fields
-    //const stmt = db.prepare("INSERT INTO SCADA (test, abc) VALUES (?)");
+    //const statement  = db.prepare("INSERT INTO SCADA Date VALUES (?)");
+    const statement = db.prepare("INSERT INTO SCADA (Date, Time) VALUES (?, ?)");
+    console.log(statement);
+    const d = new Date();
+    // Date yyyy-mm-dd
+    const dateStr = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    // Time hh:mm:ss
+    const timeStr = d.toLocaleTimeString();
 
-    /*for (let i = 0; i < 10; i++) {
-        stmt.run("test " + i);
-    }*/
+// fills the rows (Date, Time)
+    statement.run(dateStr, timeStr);
 
-    //stmt.finalize(readAllRows);
+    //statement.finalize(readAllRows);
 }
 
 function readAllRows() {
