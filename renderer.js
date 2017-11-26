@@ -10,13 +10,10 @@ const processpath = './SCADA/Spirt.exe';
 const controlContainer = document.getElementById('control_container');
 const controlStart = document.getElementById('control_start');
 const controlExit = document.getElementById('control_exit');
-
 let controlStop = document.createElement('button');
 controlStop.innerHTML = 'Stop';
 controlStop.setAttribute('id', 'control_stop');
-// todo: below
-//PPC_305>7; [6] > 7
-//PPC_307>5; [7] > 5
+
 // parameter => index of array
 /*const TR_106 = 0;
 const TR_111 = 1;
@@ -27,19 +24,29 @@ const PPC_307 = 7;
 const TPC_101 = 9;
 const TPC_102 = 10;*/
 // not used indexs = 2, 5, 8, 11
-
+let isStoped = true;
+let ifFirstStart = true;
 // start button launchers the SCADA program
 controlStart.onclick = function () {
     console.log('start');
-    runSCADAProgram();
+    isStoped = false;
+    if (ifFirstStart) {
+        runSCADAProgram();
+        ifFirstStart = false;
+    }
+
+
     controlStart.parentNode.replaceChild(controlStop, controlStart);
 
     // run DB => create Table,
     runDB();
     // save last line
     let savedLastLine = '';
-    setInterval(function () {
+    const timerId = setInterval(function () {
         console.log('read');
+        if (isStoped) {
+            clearInterval(timerId);
+        }
         fs.readFile(filepath, 'utf-8', (err, data) => {
             if (err) {
                 console.log("An error ocurred reading the file :" + err.message);
@@ -78,13 +85,15 @@ controlStart.onclick = function () {
 // stop buttons (close the SCADA)
 controlStop.onclick = function () {
     console.log('stop');
-    //closeSCADAProgram();
+    isStoped = true;
     controlStop.parentNode.replaceChild(controlStart, controlStop);
+
 };
 // close app
 controlExit.onclick = function () {
     window.close();
 };
+
 // below function it is work
 function runSCADAProgram() {
     execFile(processpath, function (err, data) {
