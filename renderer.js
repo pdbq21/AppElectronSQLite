@@ -116,6 +116,7 @@ let elementTableBody = document.querySelector('#table-props>tbody');
 function renderTable(data) {
     console.log('callback', data);
     // render thead
+    // todo: if this data from the SelectDB need clear thead for new header
     if (elementTableHead.innerHTML === '') {
         Object.keys(data).forEach((item) => {
             const th = document.createElement("th");
@@ -140,7 +141,7 @@ controlSelectButton.onclick = function(){
     stopReading();
     const value = controlSelectInput.value;
     if (!!value.trim()){
-        // 
+        //
         selectDB(value, renderTable)
     }    
     
