@@ -43,3 +43,7 @@ footer{
 #table-props td, #table-props th {
     padding: 8px;
 }
+
+.contron_select{
+display: flex;
+}    
