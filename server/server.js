@@ -95,3 +95,12 @@ exports.closeDb = function () {
 exports.runDB =  function () {
     createDb();
 };
+
+exports.selectDB = function(query, callback){
+db.each(query, function (err, row) {
+        if(err !== null){
+            console.log(err);
+        }
+        callback(row)
+    });
+}
