@@ -10,6 +10,9 @@ const processpath = './SCADA/Spirt.exe';
 const controlContainer = document.getElementById('control_container');
 const controlStart = document.getElementById('control_start');
 const controlExit = document.getElementById('control_exit');
+const controlSelectInput = document.querySelector('.control_select>input');
+const controlSelectButton = document.querySelector('.control_select>button');
+
 let controlStop = document.createElement('button');
 controlStop.innerHTML = 'Stop';
 controlStop.setAttribute('id', 'control_stop');
@@ -129,3 +132,15 @@ function renderTable(data) {
     });
     elementTableBody.insertBefore(tr, elementTableBody.firstChild);
 }
+
+// Select date from DB
+controlSelectButton.onclick = function(){
+    const value = controlSelectInput.value;
+    if (!!value.trim()){
+    
+    }    
+    
+    // clean input
+    controlSelectInput.value = '';
+}
+
