@@ -1,4 +1,4 @@
-const {runDB, insertRows, readEachRows} = require('./server/server');
+const {runDB, insertRows, readEachRows, selectDB} = require('./server/server');
 
 
 const fs = require('fs');
@@ -111,8 +111,10 @@ function runSCADAProgram() {
 let elementTableHead = document.querySelector('#table-props>thead>tr');
 let elementTableBody = document.querySelector('#table-props>tbody');
 
+
+// todo: if the data is optional (for all data or less)
 function renderTable(data) {
-    console.log('callback');
+    console.log('callback', data);
     // render thead
     if (elementTableHead.innerHTML === '') {
         Object.keys(data).forEach((item) => {
@@ -135,12 +137,15 @@ function renderTable(data) {
 
 // Select date from DB
 controlSelectButton.onclick = function(){
+    stopReading();
     const value = controlSelectInput.value;
     if (!!value.trim()){
-    
+        // 
+        selectDB(value, renderTable)
     }    
     
     // clean input
     controlSelectInput.value = '';
 }
+
 
