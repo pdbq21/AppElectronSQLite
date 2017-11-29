@@ -29,6 +29,7 @@ const TPC_102 = 10;*/
 // not used indexs = 2, 5, 8, 11
 let ifFirstStart = true;
 let timerId = 0;
+let select = false;
 // start button launchers the SCADA program
 controlStart.onclick = function () {
     console.log('start');
@@ -113,20 +114,20 @@ let elementTableBody = document.querySelector('#table-props>tbody');
 
 
 //
-let theadLen = 0;
+
 function renderTable(data) {
-    console.log('calslback', Object.keys(data).length);
-    const arrayOfData = Object.keys(data);
+    console.log('callback', Object.keys(data).length);
     // render thead
-    if (theadLen !== arrayOfData.length) {
+    // todo: if this data from the SelectDB need clear thead for new header
+    if (select) {
         elementTableHead.innerHTML = '';
         //theadLen
-        arrayOfData.forEach((item) => {
+        Object.keys(data).forEach((item) => {
             const th = document.createElement("th");
             th.innerHTML = item;
             elementTableHead.appendChild(th)
         });
-        theadLen = arrayOfData.length;
+        select = false;
     }
 
     const tr = document.createElement("tr");
@@ -144,6 +145,7 @@ console.log(controlSelectButton);
 // Select date from DB
 controlSelectButton.onclick = function(){
     clearInterval(timerId);
+    select = true;
     const value = controlSelectInput.value;
     if (!!value.trim()){
         //
