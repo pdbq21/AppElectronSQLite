@@ -103,4 +103,4 @@ db.each(query, function (err, row) {
         }
         callback(row)
     });
-}
+};

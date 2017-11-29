@@ -112,17 +112,21 @@ let elementTableHead = document.querySelector('#table-props>thead>tr');
 let elementTableBody = document.querySelector('#table-props>tbody');
 
 
-// todo: if the data is optional (for all data or less)
+//
+let theadLen = 0;
 function renderTable(data) {
-    console.log('callback', data);
+    console.log('calslback', Object.keys(data).length);
+    const arrayOfData = Object.keys(data);
     // render thead
-    // todo: if this data from the SelectDB need clear thead for new header
-    if (elementTableHead.innerHTML === '') {
-        Object.keys(data).forEach((item) => {
+    if (theadLen !== arrayOfData.length) {
+        elementTableHead.innerHTML = '';
+        //theadLen
+        arrayOfData.forEach((item) => {
             const th = document.createElement("th");
             th.innerHTML = item;
             elementTableHead.appendChild(th)
         });
+        theadLen = arrayOfData.length;
     }
 
     const tr = document.createElement("tr");
@@ -136,9 +140,10 @@ function renderTable(data) {
     elementTableBody.insertBefore(tr, elementTableBody.firstChild);
 }
 
+console.log(controlSelectButton);
 // Select date from DB
 controlSelectButton.onclick = function(){
-    stopReading();
+    clearInterval(timerId);
     const value = controlSelectInput.value;
     if (!!value.trim()){
         //
