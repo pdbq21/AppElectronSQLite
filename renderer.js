@@ -6,6 +6,7 @@ const {execFile, spawn} = require('child_process');
 // path
 const filepath = './SCADA/SCADA.txt';
 const processpath = './SCADA/Spirt.exe';
+
 // elements
 const controlContainer = document.getElementById('control_container');
 const controlStart = document.getElementById('control_start');
@@ -119,8 +120,9 @@ function renderTable(data) {
     console.log('callback', Object.keys(data).length);
     // render thead
     // todo: if this data from the SelectDB need clear thead for new header
-    if (select) {
+    if (select || elementTableHead.innerHTML === '') {
         elementTableHead.innerHTML = '';
+        elementTableBody.innerHTML = '';
         //theadLen
         Object.keys(data).forEach((item) => {
             const th = document.createElement("th");
