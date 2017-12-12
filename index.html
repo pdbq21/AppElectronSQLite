@@ -7,8 +7,8 @@
 </head>
 <body>
 <main>
-    <p>Table view</p>
     <div class="table_container">
+        <p id="table_title">Table view</p>
         <table id="table-props">
             <thead>
             <tr></tr>
@@ -17,33 +17,21 @@
         </table>
     </div>
 
-
-    <p id="test"></p>
     <div id="controls_container">
-        <div class="control_select" >
-        <input placeholder="Select from DB" />
-        <button>Select</button>
+        <div class="control_select">
+            <form id="control_select" class="form">
+                <input type="text" class="form_field" placeholder="Select from DB"/>
+                <button type="button" class="btn">Select</button>
+            </form>
         </div>
-        
-        <button id="control_start">Start</button>
-        <button id="control_exit">Exit</button>
+        <button type="button" id="control_start" class="btn">Start</button>
+        <button type="button" id="control_exit" class="btn">Exit</button>
     </div>
 
 </main>
-<footer>
-    Using Node.js
-    <script>document.write(process.versions.node)</script>
-    ,
-    Chromium
-    <script>document.write(process.versions.chrome)</script>
-    ,
-    and Electron
-    <script>document.write(process.versions.electron)</script>
-    .
-</footer>
 <script>
     // You can also require other files to run in this process
-    require('./renderer.js')
+    require('./render.js')
 </script>
 </body>
 </html>

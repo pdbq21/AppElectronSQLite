@@ -1,4 +1,4 @@
-const {runDB, insertRows, readEachRows, selectDB} = require('./server/server');
+const {runDB, insertRows, readEachRows, selectDB} = require('./db');
 
 
 const fs = require('fs');
@@ -11,12 +11,13 @@ const processpath = './SCADA/Spirt.exe';
 const controlContainer = document.getElementById('control_container');
 const controlStart = document.getElementById('control_start');
 const controlExit = document.getElementById('control_exit');
-const controlSelectInput = document.querySelector('.control_select>input');
-const controlSelectButton = document.querySelector('.control_select>button');
+const controlSelectInput = document.querySelector('#control_select>input');
+const controlSelectButton = document.querySelector('#control_select>button');
 
 let controlStop = document.createElement('button');
 controlStop.innerHTML = 'Stop';
 controlStop.setAttribute('id', 'control_stop');
+controlStop.setAttribute('class', 'btn');
 
 // parameter => index of array
 /*const TR_106 = 0;

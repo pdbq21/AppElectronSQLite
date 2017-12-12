@@ -49,17 +49,14 @@ const sqlite3 = require('sqlite3').verbose();
 let db;
 
 function createDb() {
-    console.log("createDb db");
     db = new sqlite3.Database('db.sqlite3', createTable);
 }
-
-
+const placeholders = columns.map(({name, type}) => `${name} ${type}`).join(',');
+console.log(`CREATE TABLE IF NOT EXISTS SCADA (${placeholders})`)
 function createTable() {
-    console.log("createTable SCADA");
-
     const placeholders = columns.map(({name, type}) => `${name} ${type}`).join(',');
-    //console.log(placeholders);
     // fields: date, time, ...parameters, warning
+    console.log(`CREATE TABLE IF NOT EXISTS SCADA (${placeholders})`)
     db.run(`CREATE TABLE IF NOT EXISTS SCADA (${placeholders})`);
 }
 
