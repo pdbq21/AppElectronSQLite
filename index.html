@@ -9,14 +9,15 @@
 <main>
     <div class="table_container">
         <p id="table_title">Table view</p>
-        <table id="table-props">
-            <thead>
-            <tr></tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="table">
+            <table id="table-props">
+                <thead>
+                <tr></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
-
     <div id="controls_container">
         <div class="control_select">
             <form id="control_select" class="form">
@@ -27,10 +28,8 @@
         <button type="button" id="control_start" class="btn">Start</button>
         <button type="button" id="control_exit" class="btn">Exit</button>
     </div>
-
 </main>
 <script>
-    // You can also require other files to run in this process
     require('./render.js')
 </script>
 </body>

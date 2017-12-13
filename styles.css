@@ -19,6 +19,10 @@ footer {
     text-transform: uppercase;
     font-family: Arial;
 }
+#table{
+    overflow: auto;
+    height: 340px;
+}
 #table-props {
     width: 100%;
     border-collapse: collapse;

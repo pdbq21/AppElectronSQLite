@@ -94,7 +94,7 @@ exports.runDB =  function () {
 };
 
 exports.selectDB = function(query, callback){
-db.each(query, function (err, row) {
+    db.each(query, function (err, row) {
         if(err !== null){
             console.log(err);
         }
